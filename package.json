@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "GatePass AI Event-Entry Readiness Analysis Assistant",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server-local.js",
     "test": "node test.js"
   },
   "dependencies": {},

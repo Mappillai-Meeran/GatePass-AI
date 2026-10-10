@@ -3,7 +3,7 @@
  * Tests all required workflows, edge cases, conflicts, prompt injection hardening, and engine outputs.
  */
 
-const { runServerGatePassEngine } = require('./server.js');
+const { runServerGatePassEngine } = require('./server-local.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -24,7 +24,7 @@ console.log("=== Running GatePass AI Test Suite ===\n");
 
 // Test 1: Files Existence Test
 console.log("1. Inspecting File Implementation:");
-const requiredFiles = ['index.html', 'styles.css', 'app.js', 'server.js', 'package.json', 'Dockerfile', 'README.md'];
+const requiredFiles = ['index.html', 'styles.css', 'app.js', 'server-local.js', 'package.json', 'Dockerfile', 'README.md'];
 requiredFiles.forEach(file => {
   const exists = fs.existsSync(path.join(__dirname, file));
   assert(exists, `File '${file}' exists in project root`);
