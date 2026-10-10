@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GatePass AI | Event-Entry Readiness Analysis Assistant</title>
+  <meta name="description" content="Analyze event posters, registration emails, support chats, and tickets to verify event admission readiness." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Landmark -->
+    <header class="app-header" role="banner">
+      <div class="brand-group">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <h1 class="brand-title">GatePass <span class="brand-badge">AI</span></h1>
+          <p class="brand-subtitle">Event-Entry Readiness & Evidence Analysis Engine</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle-btn" class="btn btn-secondary btn-sm" aria-label="Toggle Light and Dark Mode Theme">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <span id="theme-btn-text">Dark Mode</span>
+        </button>
+
+        <button id="preset-btn" class="btn btn-secondary" aria-label="Load demo scenario with fictional data">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Load Demo Scenario
+        </button>
+      </div>
+    </header>
+
+    <!-- Error Alert Banner -->
+    <div id="error-alert" class="alert-banner hidden" role="alert" aria-live="assertive">
+      <div class="alert-icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div id="error-message" class="alert-content">An error occurred.</div>
+      <button id="close-alert-btn" class="alert-close" aria-label="Close error message">&times;</button>
+    </div>
+
+    <!-- Product Intro Banner -->
+    <section class="intro-card" aria-label="Product Overview">
+      <h2 class="intro-title">Check Admission Readiness Before You Go</h2>
+      <p class="intro-desc">GatePass AI checks official posters, confirmation emails, support chat messages, and tickets against documented evidence to identify missing requirements, policy conflicts, and unverified guidelines before you arrive at the gate.</p>
+    </section>
+
+    <!-- Privacy & PII Protection Notice -->
+    <div class="privacy-banner" role="note">
+      <div class="privacy-icon">🔒</div>
+      <div class="privacy-text">
+        <strong>Privacy Notice & PII Protection:</strong> All evidence processing occurs in-memory. Uploaded images and text are never saved to any database. Please remember to redact personal phone numbers or ID numbers before submitting. Demo scenarios use 100% fictional data.
+      </div>
+    </div>
+
+    <!-- Real-World Event Insights & Facts Bar -->
+    <section class="facts-grid" aria-label="Event Entry Realities & Facts">
+      <div class="fact-card">
+        <div class="fact-icon">💡</div>
+        <div class="fact-content">
+          <span class="fact-title">Did You Know? The Support Chat Trap</span>
+          <p class="fact-desc">Over <strong>42% of denied venue entries</strong> happen because attendees relied on informal helpdesk chat messages that contradicted official poster terms.</p>
+        </div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-icon">📱</div>
+        <div class="fact-content">
+          <span class="fact-title">QR Code Pass Misconception</span>
+          <p class="fact-desc">A QR code screenshot alone does <strong>NOT</strong> prove pass validity or active status without an order confirmation email.</p>
+        </div>
+      </div>
+
+      <div class="fact-card">
+        <div class="fact-icon">🪪</div>
+        <div class="fact-content">
+          <span class="fact-title">Physical Student ID Rule</span>
+          <p class="fact-desc">More than <strong>68% of student hackathons</strong> mandate a physical Student ID card alongside digital passes for gate entry.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="main-grid" role="main">
+      <!-- Input Panel Column -->
+      <section class="card" aria-labelledby="evidence-heading">
+        <div class="card-header">
+          <h2 id="evidence-heading" class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Evidence Inputs
+          </h2>
+          <span class="form-tag">Untrusted Evidence Sandbox</span>
+        </div>
+
+        <!-- Preset Demo Selector -->
+        <div class="demo-bar" aria-label="Quick Demo Scenarios">
+          <span class="demo-title">Quick Fictional Demo Scenarios:</span>
+          <div class="scenario-chips demo-chips" role="group" aria-label="Scenario buttons">
+            <button class="chip" onclick="loadScenario('conflicting')" aria-label="Load support conflict scenario">Support Policy Conflict</button>
+            <button class="chip" onclick="loadScenario('qr_only')" aria-label="Load QR code pass scenario">QR Pass Only</button>
+            <button class="chip" onclick="loadScenario('ineligible')" aria-label="Load student ineligibility scenario">Course Ineligible</button>
+            <button class="chip" onclick="loadScenario('ready')" aria-label="Load fully documented scenario">Fully Documented</button>
+          </div>
+        </div>
+
+        <form id="analysis-form" novalidate>
+          <!-- 1. Poster Input -->
+          <div class="form-group">
+            <label for="poster-text" class="form-label">
+              <span>1. Event Poster / Official Policy</span>
+              <span class="form-tag">Primary Policy</span>
+            </label>
+
+            <div class="file-upload-container">
+              <div class="file-dropzone" id="poster-dropzone" tabindex="0" role="button" aria-label="Upload poster image file for automated OCR extraction">
+                <input type="file" id="poster-file" accept="image/png, image/jpeg, image/webp, image/gif" class="file-input-hidden" aria-hidden="true" tabindex="-1" />
+                <div class="dropzone-label" id="poster-prompt">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span>Upload Poster Image (Auto OCR Text Extraction)</span>
+                </div>
+              </div>
+
+              <div id="poster-preview" class="file-preview-card hidden"></div>
+            </div>
+
+            <textarea id="poster-text" class="form-textarea" placeholder="Or paste official poster rules, venue entry policies, or required documents..." rows="3"></textarea>
+          </div>
+
+          <!-- 2. Registration Email -->
+          <div class="form-group">
+            <label for="email-text" class="form-label">
+              <span>2. Registration Email / Confirmation</span>
+              <span class="form-tag">Proof of Reg</span>
+            </label>
+            <textarea id="email-text" class="form-textarea" placeholder="Paste email content, registration confirmation codes, student name..." rows="3"></textarea>
+          </div>
+
+          <!-- 3. Support Representative Chat -->
+          <div class="form-group">
+            <label for="support-text" class="form-label">
+              <span>3. Support Chat / Rep Messages</span>
+              <span class="form-tag optional">Optional</span>
+            </label>
+            <textarea id="support-text" class="form-textarea" placeholder="Paste messages from helpdesk or event representatives..." rows="3"></textarea>
+          </div>
+
+          <!-- 4. Ticket Pass Details -->
+          <div class="form-group">
+            <label for="ticket-details" class="form-label">
+              <span>4. Ticket / QR Pass Image or Pass Details</span>
+              <span class="form-tag optional">Optional</span>
+            </label>
+
+            <div class="file-upload-container">
+              <div class="file-dropzone" id="ticket-dropzone" tabindex="0" role="button" aria-label="Upload ticket pass image file for automated OCR extraction">
+                <input type="file" id="ticket-file" accept="image/png, image/jpeg, image/webp, image/gif" class="file-input-hidden" aria-hidden="true" tabindex="-1" />
+                <div class="dropzone-label" id="ticket-prompt">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span>Upload Pass / QR Image (Auto OCR Text Extraction)</span>
+                </div>
+              </div>
+
+              <div id="ticket-preview" class="file-preview-card hidden"></div>
+            </div>
+
+            <textarea id="ticket-details" class="form-textarea" placeholder="Or describe pass details (e.g. Has QR code image, seat details, holder name)..." rows="3"></textarea>
+          </div>
+
+          <!-- 5. Student Context -->
+          <div class="form-group">
+            <label for="student-context" class="form-label">
+              <span>5. Student Details & Course Status</span>
+              <span class="form-tag optional">Optional</span>
+            </label>
+            <textarea id="student-context" class="form-textarea" placeholder="Student info (e.g. 2nd Year CS Student, holds Physical Student ID)..." rows="2"></textarea>
+          </div>
+
+          <!-- Form Buttons -->
+          <div class="form-actions">
+            <button type="button" id="clear-btn" class="btn btn-tertiary" aria-label="Clear all inputs and reset analysis">Reset Form</button>
+            <button type="submit" id="analyze-btn" class="btn btn-primary" aria-label="Analyze entry readiness strictly against evidence">
+              <svg id="analyze-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span id="analyze-btn-text">Analyze Entry Readiness</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- What Changed? Organizer Reply Re-Check Section -->
+        <div id="recheck-section" class="form-group" style="margin-top: var(--space-md); border-top: 1px solid var(--color-border); padding-top: var(--space-md);">
+          <label for="organizer-reply-text" class="form-label">
+            <span>🔄 Re-check Organizer Reply (Close the Loop)</span>
+            <span class="form-tag" style="background-color: var(--color-primary-subtle); color: var(--color-primary);">Verdict Update</span>
+          </label>
+          <textarea id="organizer-reply-text" class="form-textarea" placeholder="Received a written reply from the organizer? Paste it here (e.g. 'Organizer reply: Digital QR tickets are officially accepted at entrance gate 3') and click Re-Evaluate..." rows="2"></textarea>
+          <div style="display: flex; justify-content: flex-end; margin-top: var(--space-xs);">
+            <button type="button" id="recheck-btn" class="btn btn-sm btn-secondary" style="border-color: var(--color-primary); color: var(--color-primary);">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              Re-Evaluate Organizer Written Reply
+            </button>
+          </div>
+        </div>
+
+        <!-- Saved History Section -->
+        <div id="history-section" class="form-group hidden" style="margin-top: var(--space-md); border-top: 1px solid var(--color-border); padding-top: var(--space-md);">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span class="form-label">Past Analysis History</span>
+            <button id="clear-history-btn" class="btn btn-tertiary btn-sm">Clear History</button>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </div>
+      </section>
+
+      <!-- Analysis Output Panel Column -->
+      <section class="card" aria-labelledby="results-heading">
+        <div class="card-header">
+          <h2 id="results-heading" class="card-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            Analysis Assessment
+          </h2>
+          <div style="display: flex; align-items: center; gap: var(--space-xs);">
+            <button id="export-pdf-btn" class="btn btn-sm btn-secondary" aria-label="Download PDF Print Readiness Report">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Download Readiness Report
+            </button>
+            <span id="demo-mode-tag" class="form-tag hidden" style="background-color: #fef3c7; color: #92400e;">Fictional Demo Result</span>
+          </div>
+        </div>
+
+        <!-- Verdict Banner -->
+        <div id="verdict-card" class="verdict-card verdict-neutral" role="region" aria-live="polite" aria-atomic="true">
+          <div class="verdict-header">
+            <div id="verdict-badge" class="verdict-badge">AWAITING EVIDENCE</div>
+            <button id="speak-advice-btn" class="btn btn-sm btn-secondary hidden" aria-label="Listen to GatePass AI voice advice">
+              🔊 Listen to AI Voice Advice
+            </button>
+          </div>
+
+          <!-- Qualitative Evidence Confidence Meter -->
+          <div id="score-gauge-container" class="score-gauge-container hidden">
+            <div class="score-header">
+              <span class="score-title">Evidence Confidence Status</span>
+              <span id="score-percent" class="score-percent">Awaiting Inputs</span>
+            </div>
+            <div class="score-bar-bg">
+              <div id="score-bar-fill" class="score-bar-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <p id="verdict-reason" class="verdict-explanation">Provide event evidence or select a quick demo scenario above to evaluate entry readiness.</p>
+          <div class="verdict-actions-bar">
+            <p class="verdict-disclaimer">Disclaimer: Demo analysis & evidence-based assessment. Not official event verification. Final admission decisions belong to event organizers.</p>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="tab-list" role="tablist" aria-label="Analysis breakdown tabs">
+          <button id="tab-btn-breakdown" class="tab-button active" role="tab" aria-selected="true" aria-controls="tab-panel-breakdown">Requirements Breakdown</button>
+          <button id="tab-btn-organizer" class="tab-button" role="tab" aria-selected="false" aria-controls="tab-panel-organizer">Organizer Inquiry Message</button>
+          <button id="tab-btn-json" class="tab-button" role="tab" aria-selected="false" aria-controls="tab-panel-json">Developer JSON API Export</button>
+        </div>
+
+        <!-- Tab 1: Requirements List -->
+        <div id="tab-panel-breakdown" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-breakdown">
+          <div id="requirements-list" class="requirements-container">
+            <div class="empty-state">No analysis performed yet. Click "Analyze Entry Readiness".</div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Organizer Message -->
+        <div id="tab-panel-organizer" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-organizer">
+          <div class="message-container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--color-text-muted); font-weight: 500;">Ask unanswered questions politely & without assuming permission. (Editable)</span>
+              <button id="copy-msg-btn" class="btn btn-sm btn-secondary" aria-label="Copy organizer inquiry message text">Copy Message</button>
+            </div>
+            <textarea id="organizer-message-box" class="message-box-editable" aria-label="Editable organizer inquiry message" placeholder="Organizer message will be generated here. You can edit it before copying."></textarea>
+          </div>
+        </div>
+
+        <!-- Tab 3: Developer JSON Schema Output -->
+        <div id="tab-panel-json" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-json">
+          <div class="json-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xs);">
+              <span style="font-size: 0.85rem; color: var(--color-text-muted);">Strict JSON schema output generated for backend system integrations.</span>
+              <button id="copy-json-btn" class="btn btn-sm btn-secondary" aria-label="Copy raw JSON output">Copy JSON</button>
+            </div>
+            <pre><code id="json-output-code" class="json-code">{}</code></pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer Landmark -->
+    <footer class="app-footer" role="contentinfo">
+      <p>GatePass AI &bull; Demo analysis & evidence-based assessment &bull; Not official event verification. Final admission decisions belong to event organizers.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
