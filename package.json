@@ -2,7 +2,6 @@
   "name": "gatepass-ai",
   "version": "1.0.0",
   "description": "GatePass AI Event-Entry Readiness Analysis Assistant",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "node test.js"
